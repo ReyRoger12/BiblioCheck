@@ -1,0 +1,100 @@
+body {
+    font-family: 'Arial', sans-serif;
+           background-image: url("https://localhost/DOCENTETRACK/assets/FONDOB.jpg"), 
+                      linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)); /* Overlay blanco sutil */
+    background-size: cover;
+    background-position: center;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.main-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* Eliminamos el padding y max-width de aquí para aplicarlos a login-card */
+    width: 100%;
+}
+
+/* --- NUEVOS ESTILOS PARA EL CONTENEDOR BLANCO --- */
+.login-card {
+           background-image: url("https://localhost/DOCENTETRACK/assets/FONDOE.jpg"), 
+                      linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)); /* Overlay blanco sutil */
+    background-size: cover;
+    padding: 2rem; /* Espaciado interno */
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    max-width: 450px; /* Ancho máximo para la tarjeta de login */
+    width: 90%; /* Ancho responsivo */
+    display: flex; /* Para centrar contenido dentro de la tarjeta */
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+}
+/* ------------------------------------------------ */
+
+
+.logo-school {
+    max-width: 180px; /* Reducido un poco para que quepa mejor en la tarjeta */
+    margin-bottom: 1.5rem; /* Ajustado el margen inferior */
+}
+
+.brand-title {
+    color: #343a40;
+    margin-bottom: 1.5rem; /* Ajustado el margen inferior */
+    font-size: 2.2rem; /* Reducido un poco */
+    font-weight: bold;
+}
+
+.buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    width: 100%;
+    max-width: 350px; /* Reducido para que se vea bien en la tarjeta */
+    margin-bottom: 0 !important; /* Eliminamos el margen inferior que se agregó en HTML */
+}
+
+.btn-option {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 1rem;
+    font-size: 1.2rem;
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+}
+
+.btn-option:hover {
+    transform: scale(1.05);
+}
+
+.logo-app {
+    max-width: 250px;
+}
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+    .logo-school {
+        max-width: 150px; /* Ajuste para móviles */
+    }
+    
+    .brand-title {
+        font-size: 1.8rem;
+    }
+    
+    .logo-app {
+        max-width: 150px;
+    }
+
+    .login-card {
+        padding: 1.5rem; /* Menos padding en móviles */
+    }
+}

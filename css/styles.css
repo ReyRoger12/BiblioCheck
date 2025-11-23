@@ -1,0 +1,158 @@
+/* Colores y Tipografía TecNM Tuxtla Gutiérrez */
+:root {
+    --tecnm-blue-main: #004C99; /* Azul fuerte para botones y detalles */
+    --tecnm-blue-dark: #003366; /* Azul oscuro para hover */
+    --tecnm-white: #FFFFFF;     /* Blanco */
+    --tecnm-light-gray: #F0F0F0; /* Fondo de botones de salida */
+    --card-shadow: 0 10px 25px rgba(0, 0, 0, 0.1); /* Sombra suave para la tarjeta */
+}
+
+/* ---------------------------------------------------- */
+/* FONDO Y CUERPO */
+/* ---------------------------------------------------- */
+
+/* Estilo para el cuerpo con fondo de imagen y efecto tecnológico */
+.login-body-bg {
+    /* Aquí se sugiere una imagen de fondo (por ejemplo, el edificio de la escuela) */
+    /* **Necesitas cambiar 'ruta/a/tu/imagen-fondo.jpg' por la imagen real** */
+    background-image: url("https://localhost/DOCENTETRACK/assets/FONDOB.jpg"), 
+                      linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)); /* Overlay blanco sutil */
+    background-size: cover;
+    background-position: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Efecto de patrón de circuito o tecnológico (opcional, si tienes la imagen) */
+.login-body-bg::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Ejemplo de un patrón sutil de circuitos */
+    /* **Necesitas cambiar 'ruta/a/patron-circuito.png' si lo usas** */
+    /* background-image: url('ruta/a/patron-circuito.png'); */ 
+    background-repeat: repeat;
+    opacity: 0.1; /* Transparencia para que sea sutil */
+    z-index: -1;
+}
+
+/* ---------------------------------------------------- */
+/* TARJETA DE LOGIN */
+/* ---------------------------------------------------- */
+
+.login-card-container {
+    max-width: 450px; /* Ancho un poco más grande para modernizar */
+    width: 90%;
+    border: none;
+    border-radius: 15px; /* Bordes redondeados */
+    box-shadow: var(--card-shadow);
+    background-color: var(--tecnm-white);
+    backdrop-filter: blur(5px); /* Efecto de desenfoque si hay fondo */
+    transition: transform 0.3s ease-in-out;
+}
+
+.login-card-container:hover {
+    transform: translateY(-3px);
+}
+
+.login-logo {
+    max-height: 100px; /* Ajuste de tamaño del logo */
+    border-radius: 10%; /* Opcional: si quieres que el logo sea circular */
+    border: 3px solid var(--tecnm-blue-main); /* Borde azul para destacar */
+    padding: 5px;
+}
+
+/* ---------------------------------------------------- */
+/* FORMULARIO Y CONTROLES */
+/* ---------------------------------------------------- */
+
+.login-label {
+    font-weight: 600;
+    color: var(--tecnm-blue-dark); /* Texto de etiqueta en azul oscuro */
+    margin-bottom: 5px;
+}
+
+.login-input,
+.login-input-password {
+    border-radius: 10px;
+    padding: 12px 15px;
+    border: 1px solid #ced4da;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+.login-input:focus,
+.login-input-password:focus {
+    border-color: var(--tecnm-blue-main);
+    box-shadow: 0 0 0 0.25rem rgba(0, 76, 153, 0.25); /* Sombra de foco azul TecNM */
+    outline: none;
+}
+
+/* Toggle de Contraseña */
+.login-password-toggle {
+    /* Reset de Bootstrap */
+    padding: 12px;
+    font-size: 1.2rem;
+    width: 45px; /* Ancho fijo */
+    height: 100%; /* Altura completa del input group */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* Estilos Modernos */
+    border: 1px solid #ced4da;
+    border-left: none;
+    border-radius: 0 10px 10px 0; /* Solo el lado derecho redondeado */
+    background: var(--tecnm-white);
+    color: var(--tecnm-blue-dark);
+    cursor: pointer;
+}
+
+.login-password-toggle:hover {
+    background: var(--tecnm-light-gray);
+}
+
+/* ---------------------------------------------------- */
+/* BOTONES */
+/* ---------------------------------------------------- */
+
+/* Botón de Ingreso (Azul Principal) */
+.btn-tecnm-main {
+    background-color: var(--tecnm-blue-main);
+    color: var(--tecnm-white);
+    font-weight: bold;
+    border-radius: 10px;
+    padding: 12px 0;
+    border: none;
+    transition: background-color 0.3s, transform 0.2s;
+}
+
+.btn-tecnm-main:hover {
+    background-color: var(--tecnm-blue-dark);
+    transform: translateY(-1px); /* Efecto 3D sutil */
+    color: var(--tecnm-white); /* Mantener el color blanco en hover */
+}
+
+.btn-tecnm-main:focus {
+    box-shadow: 0 0 0 0.25rem rgba(0, 76, 153, 0.5); /* Foco con sombra azul */
+}
+
+/* Botón de Salir (Estilo Claro/Blanco) */
+.btn-tecnm-exit {
+    background-color: var(--tecnm-light-gray);
+    color: var(--tecnm-blue-dark);
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 12px 0;
+    border: none;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.btn-tecnm-exit:hover {
+    background-color: #DDDDDD;
+    color: var(--tecnm-blue-main);
+}
+
+.btn-tecnm-exit:focus {
+    box-shadow: 0 0 0 0.25rem rgba(200, 200, 200, 0.5);
+}

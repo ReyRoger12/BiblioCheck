@@ -1,0 +1,438 @@
+body {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+        background-image: url("../assets/FONDOC.jpg"), 
+                      linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)); /* Overlay blanco sutil */
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 260px;
+    background-color: #1D3557;
+    border-right: 1px solid #ddd;
+    height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+    position: fixed;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar h2 {
+    color: #ebe5e5;
+    margin-bottom: 30px;
+    font-size: 20px;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.usuario-en-sesion {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 30px;
+    padding: 12px;
+    border-radius: 8px;
+    background-color: #f8f9fa;
+}
+
+.usuario-en-sesion .avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.usuario-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.usuario-nombre {
+    font-weight: 600;
+    font-size: 14px;
+}
+
+.usuario-rol {
+    font-size: 12px;
+    color: #666;
+}
+
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-grow: 1;
+}
+
+.sidebar li {
+    margin-bottom: 5px;
+}
+
+.sidebar li a {
+    text-decoration: none;
+    color: #f0ebeb;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+/* sombreado cuando esta selecionada una seccion*/
+.sidebar li.activo a,
+.sidebar li a:hover {
+    background-color: #d7dce4;
+    color: #272829;
+}
+
+.btn-salir {
+    margin-top: auto;
+    width: 100%;
+    text-align: center;
+    padding: 12px;
+    border-radius: 8px;
+    background: #dc3545;
+    color: white;
+    border: none;
+    cursor: pointer;
+    transition: background 0.3s;
+    display: block;
+}
+
+.btn-salir:hover {
+    background: #c82333;
+}
+
+.contenido {
+    flex: 1;
+    padding: 30px;
+    margin-left: 260px;
+    width: calc(100% - 260px);
+    box-sizing: border-box;
+}
+
+/* Estilos para las secciones */
+.seccion-contenido {
+    width: 100%;
+    max-width: 1200px;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.seccion-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+.seccion-header h1 {
+    margin: 0;
+    font-size: 24px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.form-busqueda {
+    position: relative;
+    width: 100%;
+    max-width: 500px;
+}
+
+.buscador {
+    padding: 10px 40px 10px 15px;
+    width: 100%;
+    border-radius: 20px;
+    border: 1px solid #ddd;
+    background-color: #f5f7fa;
+    outline: none;
+    font-size: 14px;
+    transition: all 0.3s;
+    box-sizing: border-box;
+}
+
+.buscador:focus {
+    border-color: #1a73e8;
+    box-shadow: 0 0 0 2px rgba(26, 115, 232, 0.2);
+}
+
+.btn-buscar {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: none;
+    font-size: 16px;
+    color: #666;
+    cursor: pointer;
+    padding: 0;
+}
+
+.tabla-contenedor {
+    width: 100%;
+    overflow-x: auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+}
+
+table {
+    width: 100%;
+    min-width: 800px;
+    border-collapse: collapse;
+}
+
+th, td {
+    padding: 15px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    vertical-align: middle;
+}
+
+th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #555;
+    position: sticky;
+    top: 0;
+}
+
+tr:hover td {
+    background-color: #f5f5f5;
+}
+
+/* Badges */
+.badge {
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 13px;
+    font-weight: 500;
+    display: inline-block;
+    min-width: 80px;
+    text-align: center;
+}
+
+.badge.presente, .badge.activo {
+    background-color: #28a745;
+    color: white;
+}
+
+.badge.ausente, .badge.inactivo {
+    background-color: #dc3545;
+    color: white;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    
+    .contenido {
+        margin-left: 0;
+        width: 100%;
+    }
+    
+    .seccion-header {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .form-busqueda {
+        max-width: 100%;
+    }
+}
+
+/* Iconos */
+.fas, .fa {
+    font-size: 16px;
+}
+
+/* Acciones */
+.acciones {
+    display: flex;
+    gap: 8px;
+    justify-content: center;
+}
+
+.btn-editar, .btn-eliminar {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    padding: 5px;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s;
+}
+
+.btn-editar {
+    color: #1a73e8;
+    border: 1px solid #1a73e8;
+}
+
+.btn-editar:hover {
+    background: #1a73e8;
+    color: white;
+}
+
+.btn-eliminar {
+    color: #dc3545;
+    border: 1px solid #dc3545;
+}
+
+.btn-eliminar:hover {
+    background: #dc3545;
+    color: white;
+}
+
+
+
+/* =========================
+   ESTILOS TARJETAS DE PUESTO
+   ========================= */
+
+.puesto-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 20px;
+    position: relative;
+    /* Asegura que todas las tarjetas en una fila tengan la misma altura */
+    height: 100%; 
+    display: flex;
+    flex-direction: column;
+}
+
+/* Formulario principal de la tarjeta */
+.form-editar-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.form-editar-card .form-control {
+    /* El input de nombre */
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-align: center;
+    border: 1px solid transparent; /* Ocultar borde hasta hover */
+    background-color: #f8f9fa;
+    padding-top: 20px; /* Espacio para que no choque con botón de eliminar */
+    margin-bottom: auto; /* Empuja el botón de guardar hacia abajo */
+}
+
+.form-editar-card .form-control:hover,
+.form-editar-card .form-control:focus {
+    border: 1px solid #ddd;
+    background-color: #fff;
+}
+
+.form-editar-card small {
+    /* El ID */
+    text-align: center;
+    display: block;
+    width: 100%;
+    font-size: 12px;
+}
+
+/* Botón de guardar (sobreescribir estilos) */
+.form-editar-card .btn-editar {
+    width: 100%;
+    margin-top: 10px;
+    border-radius: 6px; /* Sobreescribir el 50% de .btn-editar */
+    height: auto;       /* Sobreescribir la altura fija */
+    padding: 8px 12px;  /* Añadir padding */
+}
+
+/* Botón de eliminar (esquina) */
+.form-eliminar-card {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    z-index: 10;
+}
+
+/* Asegurar que el botón de eliminar se vea bien */
+.form-eliminar-card .btn-eliminar {
+    width: 28px;
+    height: 28px;
+    font-size: 14px;
+    background-color: #fff; /* Para que resalte sobre el input */
+}
+
+
+/* =========================
+   ESTILOS TARJETAS DE ASIGNACION
+   ========================= */
+
+.asignacion-card {
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    padding: 20px;
+    position: relative; /* Necesario para el botón de eliminar */
+    height: 100%; /* Asegura que todas las tarjetas en una fila tengan la misma altura */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.asignacion-info {
+    text-align: center;
+    /* Dejar espacio para el botón de eliminar */
+    padding-top: 15px; 
+    word-wrap: break-word; /* Evita que el texto largo rompa el diseño */
+}
+
+.asignacion-info .puesto-nombre {
+    font-weight: 600;
+    font-size: 1.1rem;
+    color: #1D3557; /* Color principal de tu sidebar */
+    margin-bottom: 4px;
+    /* Cortar texto si es muy largo */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.asignacion-info .alumno-nombre {
+    font-size: 1rem;
+    color: #333;
+    margin-bottom: 8px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.asignacion-info .alumno-id {
+    font-size: 0.9rem;
+    color: #666;
+    font-family: monospace;
+    background-color: #f8f9fa;
+    padding: 2px 6px;
+    border-radius: 4px;
+    display: inline-block; /* Para que el fondo se ajuste al texto */
+}
+
+/* NOTA: No necesitamos redefinir .form-eliminar-card 
+  porque ya existe y lo estamos reutilizando.
+*/

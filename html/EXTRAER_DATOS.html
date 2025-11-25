@@ -1,0 +1,365 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Firma — Capturar e imprimir</title>
+  <style>
+    :root{
+      --bg:#f7f7f8;
+      --panel:#fff;
+      --accent:#0a74da;
+      --muted:#666;
+    }
+    body{
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      margin:20px;
+      background:var(--bg);
+      color:#111;
+    }
+    .card{
+      background:var(--panel);
+      padding:16px;
+      border-radius:10px;
+      box-shadow: 0 6px 18px rgba(10,10,20,0.06);
+      max-width:900px;
+      margin:0 auto;
+    }
+    h1{ margin:0 0 8px; font-size:18px; }
+    p { margin:0 0 12px; color:var(--muted); font-size:14px; }
+
+    .pad-wrap{
+      display:flex;
+      gap:16px;
+      align-items:flex-start;
+      flex-wrap:wrap;
+    }
+
+    .canvas-box{
+      background:#fff;
+      border:1px solid #ddd;
+      border-radius:8px;
+      padding:8px;
+      box-shadow:0 3px 10px rgba(0,0,0,0.03);
+    }
+
+    canvas{
+      display:block;
+      border-radius:6px;
+      touch-action: none; /* evita scroll en touch mientras dibujas */
+    }
+
+    .controls{
+      display:flex;
+      gap:8px;
+      margin-top:8px;
+      flex-wrap:wrap;
+    }
+
+    button{
+      background:var(--accent);
+      color:#fff;
+      border:none;
+      padding:8px 12px;
+      border-radius:8px;
+      puestor:pointer;
+      font-weight:600;
+      box-shadow:0 4px 8px rgba(10,20,60,0.06);
+    }
+    button.secondary{
+      background:#e6e6e6;
+      color:#111;
+    }
+    button.danger{
+      background:#e34b4b;
+    }
+    label { font-size:13px; color:var(--muted); display:block; margin-top:8px; }
+
+    .output{
+      margin-top:14px;
+      display:flex;
+      gap:12px;
+      align-items:center;
+      flex-wrap:wrap;
+    }
+
+    .sig-img{
+      max-width:320px;
+      max-height:160px;
+      border:1px solid #ddd;
+      border-radius:6px;
+      background:#fff;
+    }
+
+    @media (max-width:600px){
+      .pad-wrap{flex-direction:column;}
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <h1>Captura tu firma</h1>
+    <p>Dibuja con el dedo o con el ratón en el área. Luego puedes insertar la firma en la página y/o imprimirla.</p>
+
+    <div class="pad-wrap">
+      <div class="canvas-box">
+        <!-- Canvas de firma -->
+        <canvas id="signature-pad" width="700" height="240" style="width:700px;height:240px"></canvas>
+
+        <div class="controls">
+          <button id="clear-btn" class="secondary">Limpiar</button>
+          <button id="undo-btn" class="secondary">Deshacer</button>
+          <button id="save-btn">Insertar en página</button>
+          <button id="print-btn" class="danger">Imprimir</button>
+        </div>
+
+        <label>
+          Tamaño del trazo:
+          <input id="thickness" type="range" min="1" max="8" value="2" />
+        </label>
+      </div>
+
+      <div style="flex:1; min-width:220px;">
+        <strong>Vista previa / Imagen insertada</strong>
+        <div class="output" id="output-area">
+          <img id="sig-image" alt="Firma" class="sig-img" style="display:none" />
+          <div id="no-image" style="color:var(--muted)">Aquí aparecerá la firma cuando la insertes.</div>
+        </div>
+
+        <p style="margin-top:12px; color:var(--muted); font-size:13px;">
+          Consejo: en móviles, si el canvas se ve borroso, prueba girar el dispositivo o usar zoom nativo del navegador.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+  // --- Setup del canvas para dibujo (soporte mouse + touch + alta resolución) ---
+  (function(){
+    const canvas = document.getElementById('signature-pad');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    let drawing = false;
+    let lastPoint = null;
+    let lineWidth = Number(document.getElementById('thickness').value) || 2;
+
+    // Mantener historial simple para "undo" (guardamos dataURL de pasos)
+    const history = [];
+    function pushHistory(){
+      try{
+        history.push(canvas.toDataURL());
+        if(history.length>20) history.shift();
+      }catch(e){}
+    }
+
+    // Re-dimensionar para devicePixelRatio para que quede nítido
+    function resizeCanvas(){
+      const ratio = Math.max(window.devicePixelRatio || 1, 1);
+      const w = canvas.clientWidth;
+      const h = canvas.clientHeight;
+      if (canvas.width !== Math.floor(w * ratio) || canvas.height !== Math.floor(h * ratio)) {
+        // guardar contenido actual
+        const temp = document.createElement('canvas');
+        temp.width = canvas.width;
+        temp.height = canvas.height;
+        temp.getContext('2d').drawImage(canvas, 0, 0);
+        // ajustar
+        canvas.width = Math.floor(w * ratio);
+        canvas.height = Math.floor(h * ratio);
+        canvas.style.width = w + 'px';
+        canvas.style.height = h + 'px';
+        ctx.scale(ratio, ratio);
+        // restaurar
+        ctx.drawImage(temp, 0, 0, w, h);
+      }
+    }
+
+    // Inicial canvas con fondo blanco (útil para exportar PNG con fondo blanco)
+    function initCanvas(){
+      resizeCanvas();
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      ctx.strokeStyle = '#111';
+      ctx.lineWidth = lineWidth;
+      // si está vacío, dejaremos un fondo blanco
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      // dibujar la imagen restaurada si existe (ya lo hace resizeCanvas)
+    }
+
+    window.addEventListener('resize', resizeCanvas);
+    initCanvas();
+    pushHistory(); // primera entrada (fondo en blanco)
+
+    function pointerPos(e){
+      const rect = canvas.getBoundingClientRect();
+      let clientX, clientY;
+      if(e.touches && e.touches.length){
+        clientX = e.touches[0].clientX;
+        clientY = e.touches[0].clientY;
+      } else {
+        clientX = e.clientX;
+        clientY = e.clientY;
+      }
+      return { x: clientX - rect.left, y: clientY - rect.top };
+    }
+
+    function beginDraw(e){
+      e.preventDefault();
+      drawing = true;
+      lastPoint = pointerPos(e);
+      ctx.beginPath();
+      ctx.moveTo(lastPoint.x, lastPoint.y);
+    }
+    function drawMove(e){
+      if(!drawing) return;
+      e.preventDefault();
+      const p = pointerPos(e);
+      // línea simple; se puede mejorar con interpolación para suavizar
+      ctx.lineTo(p.x, p.y);
+      ctx.stroke();
+      lastPoint = p;
+    }
+    function endDraw(e){
+      if(!drawing) return;
+      drawing = false;
+      ctx.closePath();
+      pushHistory();
+    }
+
+    // Soporte pointer events si está disponible
+    const supportsPointer = window.PointerEvent !== undefined;
+    if(supportsPointer){
+      canvas.addEventListener('pointerdown', (e)=>{ canvas.setPointerCapture(e.pointerId); beginDraw(e); });
+      canvas.addEventListener('pointermove', drawMove);
+      canvas.addEventListener('pointerup', endDraw);
+      canvas.addEventListener('pointercancel', endDraw);
+    } else {
+      // Touch
+      canvas.addEventListener('touchstart', beginDraw, {passive:false});
+      canvas.addEventListener('touchmove', drawMove, {passive:false});
+      canvas.addEventListener('touchend', endDraw);
+      // Mouse
+      canvas.addEventListener('mousedown', beginDraw);
+      canvas.addEventListener('mousemove', drawMove);
+      document.addEventListener('mouseup', endDraw);
+    }
+
+    // Controles botones
+    document.getElementById('clear-btn').addEventListener('click', ()=>{
+      // limpiar a fondo blanco y guardar en historial
+      ctx.save();
+      ctx.setTransform(1,0,0,1,0,0); // reset transforms
+      ctx.fillStyle = '#fff';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+      ctx.restore();
+      ctx.beginPath();
+      pushHistory();
+      updatePreview(null, false);
+    });
+
+    document.getElementById('undo-btn').addEventListener('click', ()=>{
+      if(history.length <= 1) return;
+      history.pop(); // actual
+      const last = history[history.length-1];
+      const img = new Image();
+      img.onload = () => {
+        // limpiar y dibujar
+        ctx.save();
+        ctx.setTransform(1,0,0,1,0,0);
+        ctx.clearRect(0,0,canvas.width,canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.restore();
+      };
+      img.src = last;
+      // actualizar preview si corresponde
+      const out = document.getElementById('sig-image');
+      if(out && out.style.display !== 'none') {
+        updatePreview(null, false);
+      }
+    });
+
+    document.getElementById('thickness').addEventListener('input', (e)=>{
+      lineWidth = Number(e.target.value);
+      ctx.lineWidth = lineWidth;
+    });
+
+    // Insertar firma en la página (mostrar preview)
+    function updatePreview(dataURL = null, showIfNull = true){
+      const imgEl = document.getElementById('sig-image');
+      const noImg = document.getElementById('no-image');
+      if(!dataURL){
+        // generar desde canvas
+        try {
+          dataURL = canvas.toDataURL('image/png');
+        } catch(e) {
+          dataURL = null;
+        }
+      }
+      if(dataURL){
+        imgEl.src = dataURL;
+        imgEl.style.display = 'block';
+        noImg.style.display = 'none';
+      } else if(showIfNull) {
+        imgEl.style.display = 'none';
+        noImg.style.display = 'block';
+      }
+    }
+
+    document.getElementById('save-btn').addEventListener('click', ()=>{
+      // Generar dataURL y mostrar en la zona de salida
+      const dataURL = canvas.toDataURL('image/png');
+      updatePreview(dataURL, true);
+    });
+
+    // Imprimir: abrimos una ventana nueva con la imagen (para controlar el layout) y llamamos print()
+    document.getElementById('print-btn').addEventListener('click', ()=>{
+      // Si ya tenemos una imagen insertada, la imprimimos; si no, generamos una desde el canvas
+      const preview = document.getElementById('sig-image');
+      const dataURL = (preview && preview.style.display !== 'none') ? preview.src : canvas.toDataURL('image/png');
+
+      // Crear ventana de impresión
+      const win = window.open('', '_blank');
+      if(!win){
+        alert('Bloqueador de ventanas impide abrir la ventana de impresión. Descarga la firma primero o permite ventanas emergentes.');
+        return;
+      }
+
+      win.document.write(`
+        <!doctype html>
+        <html>
+          <head>
+            <meta charset="utf-8" />
+            <title>Imprimir firma</title>
+            <style>
+              body{ margin:0; display:flex; align-items:center; justify-content:center; height:100vh; background:#fff; }
+              img{ max-width:90vw; max-height:90vh; box-shadow:0 6px 20px rgba(0,0,0,0.08); border-radius:6px; }
+            </style>
+          </head>
+          <body>
+            <img src="${dataURL}" alt="Firma" />
+            <script>
+              // Esperar a que la imagen cargue antes de imprimir
+              const img = document.querySelector('img');
+              if (img.complete) {
+                window.print();
+                // Opcional: cerrar después de imprimir (algunos navegadores no permiten auto-close)
+                setTimeout(()=>{ window.close(); }, 500);
+              } else {
+                img.onload = () => { window.print(); setTimeout(()=>{ window.close(); }, 500); };
+              }
+            <\/script>
+          </body>
+        </html>
+      `);
+      win.document.close();
+    });
+
+    // Al cargar la página, mostramos la preview vacía (sin imagen)
+    updatePreview(null, true);
+
+    // Prevención: cuando el usuario salga, no queremos perder datos, así que opcionalmente podrías guardar en localStorage
+    // (comentado por ser simple). Si quieres guardado persistente, dime y lo agrego.
+  })();
+  </script>
+</body>
+</html>

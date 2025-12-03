@@ -1,0 +1,132 @@
+@startuml BiblioCheck - Diagrama de Clases
+
+' Configuración de estilo
+skinparam classAttributeIconSize 0
+skinparam class {
+    BackgroundColor<<Table>> LightBlue
+    BorderColor DarkBlue
+    ArrowColor Black
+}
+
+' Tabla: alumnos
+class alumnos <<Table>> {
+    + id : int(11) <<PK>>
+    --
+    id_alumno : varchar(20)
+    nombre : varchar(100)
+    numero_control : varchar(50)
+    status : enum('Activo','Inactivo')
+    contrasena : varchar(255)
+    telefono : varchar(20)
+    correo_electronico : varchar(100)
+    qr_semanal : varchar(255)
+    qr_ultima_actualizacion : datetime
+    puesto : varchar(255)
+    horario_ruta : varchar(255)
+    horario_json : text
+    semestre : varchar(100)
+    carrera : varchar(255)
+}
+
+' Tabla: puestos
+class puestos <<Table>> {
+    + id : int(11) <<PK>>
+    --
+    nombre : varchar(100)
+}
+
+' Tabla intermedia: alumnos_puestos
+class alumnos_puestos <<Table>> {
+    id_alumno : varchar(6)
+    id_puesto : int(11)
+}
+
+' Tabla: asistencia
+class asistencia <<Table>> {
+    + id : int(11) <<PK>>
+    --
+    alumno_id : int(11)
+    puesto_id : int(11)
+    fecha : date
+    hora : time
+    tipo : enum('entrada','salida')
+}
+
+' Tabla: documentos
+class documentos <<Table>> {
+    + id : int(11) <<PK>>
+    --
+    usuario_id : int(11)
+    nombre : varchar(255)
+    ruta : varchar(500)
+    tipo : varchar(50)
+    fecha_subida : datetime
+}
+
+' Tabla: usuarios
+class usuarios <<Table>> {
+    + id : int(11) <<PK>>
+    --
+    nombre : varchar(100)
+    usuario : varchar(50)
+    contrasena : varchar(255)
+    tipo_usuario : enum('admin','docente')
+    fecha_creacion : timestamp
+    estado : enum('activo','inactivo')
+}
+
+' Relaciones
+
+' Relación muchos a muchos entre alumnos y puestos a través de alumnos_puestos
+alumnos "1" -- "*" alumnos_puestos : tiene >
+puestos "1" -- "*" alumnos_puestos : < asignado a
+note on link
+    Relación muchos a muchos:
+    Un alumno puede tener múltiples puestos
+    Un puesto puede ser asignado a múltiples alumnos
+end note
+
+' Relación entre asistencia y alumnos
+alumnos "1" -- "*" asistencia : registra >
+note on link
+    Un alumno puede tener
+    múltiples registros de asistencia
+end note
+
+' Relación entre asistencia y puestos
+puestos "1" -- "*" asistencia : < se registra en
+note on link
+    Un puesto puede tener
+    múltiples registros de asistencia
+end note
+
+' Relación entre documentos y usuarios
+usuarios "1" -- "*" documentos : sube >
+note on link
+    Un usuario puede subir
+    múltiples documentos
+end note
+
+' Notas adicionales
+note top of alumnos
+    Tabla principal de estudiantes
+    Contiene información personal,
+    académica y de autenticación
+end note
+
+note top of usuarios
+    Tabla de usuarios del sistema
+    (administradores y docentes)
+end note
+
+note top of asistencia
+    Registra las entradas y salidas
+    de alumnos en sus puestos asignados
+end note
+
+note top of documentos
+    Almacena documentos subidos
+    por los usuarios del sistema
+end note
+
+@enduml

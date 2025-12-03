@@ -33,7 +33,7 @@ sudo apt-get install plantuml
 plantuml class-diagram.plantuml
 ```
 
-Esto generará un archivo `class-diagram.png` con el diagrama visual.
+Esto generará un archivo `BiblioCheck - Diagrama de Clases.png` con el diagrama visual (el nombre se toma de la directiva @startuml en el archivo).
 
 ## Estructura de la Base de Datos
 
@@ -82,6 +82,14 @@ El diagrama representa las siguientes entidades principales:
 
 - **usuarios → documentos**: Uno a muchos
   - Un usuario puede subir múltiples documentos
+
+## Notas Técnicas
+
+El diagrama documenta fielmente la estructura actual de la base de datos. Se han identificado algunas inconsistencias en el esquema original que podrían requerir atención en futuras revisiones:
+
+- **Inconsistencia de tipos**: El campo `id_alumno` es `varchar(20)` en la tabla `alumnos` pero `varchar(6)` en `alumnos_puestos`
+- **Falta de claves foráneas explícitas**: La tabla `alumnos_puestos` no define explícitamente sus claves foráneas en el SQL
+- **Posible desnormalización**: El campo `puesto` en la tabla `alumnos` podría ser redundante dado que existe la relación muchos a muchos con `puestos`
 
 ## Actualización del Diagrama
 

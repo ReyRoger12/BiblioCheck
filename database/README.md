@@ -5,9 +5,13 @@ Este directorio contiene el diagrama de clases en formato PlantUML para el siste
 ## Archivos
 
 - `bibliocheck.sql`: Script SQL con la estructura de la base de datos
-- `class-diagram.plantuml`: Diagrama de clases en formato PlantUML
+- `class-diagram.plantuml`: Diagrama de clases en formato PlantUML (código fuente)
+- `BiblioCheck - Diagrama de Clases.png`: Imagen del diagrama generado
 
 ## Visualización del Diagrama
+
+### Vista Previa Rápida
+Puedes ver directamente la imagen generada: `BiblioCheck - Diagrama de Clases.png`
 
 ### Opción 1: Extensión de VS Code
 1. Instala la extensión "PlantUML" en Visual Studio Code

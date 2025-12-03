@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 25-11-2025 a las 16:11:55
+-- Tiempo de generación: 03-12-2025 a las 17:41:09
 -- Versión del servidor: 10.4.32-MariaDB
 -- Versión de PHP: 8.2.12
 
@@ -39,6 +39,8 @@ CREATE TABLE `alumnos` (
   `qr_semanal` varchar(255) DEFAULT NULL,
   `qr_ultima_actualizacion` datetime DEFAULT NULL,
   `puesto` varchar(255) NOT NULL DEFAULT '',
+  `turno` enum('Matutino','Vespertino','Mixto') DEFAULT 'Matutino',
+  `horas_objetivo` int(11) DEFAULT 4,
   `horario_ruta` varchar(255) DEFAULT NULL,
   `horario_json` text DEFAULT NULL,
   `semestre` varchar(100) DEFAULT NULL,
@@ -49,10 +51,11 @@ CREATE TABLE `alumnos` (
 -- Volcado de datos para la tabla `alumnos`
 --
 
-INSERT INTO `alumnos` (`id`, `id_alumno`, `nombre`, `numero_control`, `status`, `contrasena`, `telefono`, `correo_electronico`, `qr_semanal`, `qr_ultima_actualizacion`, `puesto`, `horario_ruta`, `horario_json`, `semestre`, `carrera`) VALUES
-(6, 'DOC001', 'Juan Perez', 'CP123', 'Activo', '$2y$10$1wfrhnl/Dfbt7j9e7nnIhu0izlCtG6f2zYtzhGyvvEwO3SnuQSmwm', '9312123121', 'Juan.perez@gmail.com', 'd9d902d2fdca0e824bc79e51ad227b44', '2025-05-01 19:58:24', '', NULL, NULL, NULL, NULL),
-(7, 'DOC002', 'Pedro Sanchez', 'CEP321', 'Activo', '$2y$10$CeABfd5kWGyklC/rGubAAeLq.QVA6G2FOuCDol8tK89qKqqxUwG76', '993123012391', 'Pedro.sanchez@gmail.com', 'fdfaf4ca6246e0259f55ba1f2c13d050', '2025-05-02 02:31:48', '', '/uploads/horarios/7/horario.pdf', '{\"Lunes\":[[\"07:00\",\"14:00\"],[\"20:00\",\"21:00\"]],\"Martes\":[[\"07:00\",\"14:00\"],[\"18:00\",\"21:00\"]],\"Miércoles\":[[\"07:00\",\"15:00\"]],\"Jueves\":[[\"07:00\",\"15:00\"],[\"20:00\",\"21:00\"]],\"Viernes\":[[\"07:00\",\"14:00\"],[\"20:00\",\"21:00\"]],\"Sábado\":[[\"07:00\",\"21:00\"]]}', '', ''),
-(12, 'DOC004', 'rodrigo', '22270446', 'Activo', '$2y$10$KxIpgg/Ub/YQrinEUu.ZG.A1/JDt94X00jVfZi4/YTsF2VKn3KLiS', '9613267349', 'L22270446@gmail.com', '6cab61d54c69e33955685a932190b659', '2025-11-24 19:31:01', 'recepcion', '/uploads/horarios/12/horario.pdf', '{\"Lunes\":[[\"07:00\",\"14:00\"],[\"20:00\",\"21:00\"]],\"Martes\":[[\"07:00\",\"14:00\"],[\"18:00\",\"21:00\"]],\"Miércoles\":[[\"07:00\",\"15:00\"]],\"Jueves\":[[\"07:00\",\"15:00\"],[\"20:00\",\"21:00\"]],\"Viernes\":[[\"07:00\",\"14:00\"],[\"20:00\",\"21:00\"]],\"Sábado\":[[\"07:00\",\"21:00\"]]}', 'septimo', 'ing. sistemas computacionales');
+INSERT INTO `alumnos` (`id`, `id_alumno`, `nombre`, `numero_control`, `status`, `contrasena`, `telefono`, `correo_electronico`, `qr_semanal`, `qr_ultima_actualizacion`, `puesto`, `turno`, `horas_objetivo`, `horario_ruta`, `horario_json`, `semestre`, `carrera`) VALUES
+(6, 'DOC001', 'Juan Perez', 'CP123', 'Activo', '$2y$10$1wfrhnl/Dfbt7j9e7nnIhu0izlCtG6f2zYtzhGyvvEwO3SnuQSmwm', '9312123121', 'Juan.perez@gmail.com', 'd9d902d2fdca0e824bc79e51ad227b44', '2025-05-01 19:58:24', '', 'Matutino', 4, NULL, NULL, NULL, NULL),
+(7, 'DOC002', 'Pedro Sanchez', 'CEP321', 'Activo', '$2y$10$CeABfd5kWGyklC/rGubAAeLq.QVA6G2FOuCDol8tK89qKqqxUwG76', '993123012391', 'Pedro.sanchez@gmail.com', 'fdfaf4ca6246e0259f55ba1f2c13d050', '2025-05-02 02:31:48', '', 'Matutino', 4, '/uploads/horarios/7/horario.pdf', '{\"Lunes\":[[\"07:00\",\"14:00\"],[\"20:00\",\"21:00\"]],\"Martes\":[[\"07:00\",\"14:00\"],[\"18:00\",\"21:00\"]],\"Miércoles\":[[\"07:00\",\"15:00\"]],\"Jueves\":[[\"07:00\",\"15:00\"],[\"20:00\",\"21:00\"]],\"Viernes\":[[\"07:00\",\"14:00\"],[\"20:00\",\"21:00\"]],\"Sábado\":[[\"07:00\",\"21:00\"]]}', '', ''),
+(12, 'DOC004', 'rodrigo', '22270446', 'Activo', '$2y$10$KxIpgg/Ub/YQrinEUu.ZG.A1/JDt94X00jVfZi4/YTsF2VKn3KLiS', '9613267349', 'L22270446@gmail.com', '6cab61d54c69e33955685a932190b659', '2025-11-24 19:31:01', 'recepcion', 'Matutino', 4, '/uploads/horarios/12/horario.pdf', '{\"Lunes\":[[\"07:00\",\"14:00\"],[\"20:00\",\"21:00\"]],\"Martes\":[[\"07:00\",\"14:00\"],[\"18:00\",\"21:00\"]],\"Miércoles\":[[\"07:00\",\"15:00\"]],\"Jueves\":[[\"07:00\",\"15:00\"],[\"20:00\",\"21:00\"]],\"Viernes\":[[\"07:00\",\"14:00\"],[\"20:00\",\"21:00\"]],\"Sábado\":[[\"07:00\",\"21:00\"]]}', 'septimo', 'ing. sistemas computacionales'),
+(16, 'DOC008', 'BONIFAZ TAPIA, JONATHAN ALEJANDRO', '22270460', 'Activo', '$2y$10$5n1Ki7rtorqPvG7CvJ1qgOH5cgIc6eKioldWKGDD3YCMpHCGfZS6i', '837466722', 'L22270446@gmail.com', NULL, NULL, 'HEMEROTECA', 'Mixto', 4, '/uploads/horarios/16/horario.pdf', '{\"Lunes\":[[\"07:00\",\"14:00\"],[\"20:00\",\"21:00\"]],\"Martes\":[[\"07:00\",\"14:00\"],[\"18:00\",\"21:00\"]],\"Miércoles\":[[\"07:00\",\"15:00\"]],\"Jueves\":[[\"07:00\",\"15:00\"],[\"20:00\",\"21:00\"]],\"Viernes\":[[\"07:00\",\"14:00\"],[\"20:00\",\"21:00\"]],\"Sábado\":[[\"07:00\",\"21:00\"]]}', '7', 'INGENIERIA EN SISTEMAS COMPUTACIONALES');
 
 -- --------------------------------------------------------
 
@@ -72,7 +75,8 @@ CREATE TABLE `alumnos_puestos` (
 INSERT INTO `alumnos_puestos` (`id_alumno`, `id_puesto`) VALUES
 ('DOC001', 1),
 ('DOC002', 2),
-('DOC004', 3);
+('DOC004', 3),
+('DOC002', 3);
 
 -- --------------------------------------------------------
 
@@ -94,7 +98,8 @@ CREATE TABLE `asistencia` (
 --
 
 INSERT INTO `asistencia` (`id`, `alumno_id`, `puesto_id`, `fecha`, `hora`, `tipo`) VALUES
-(1, 12, 3, '2025-11-25', '09:01:26', 'entrada');
+(1, 12, 3, '2025-11-25', '09:01:26', 'entrada'),
+(2, 12, 3, '2025-11-25', '10:55:55', 'salida');
 
 -- --------------------------------------------------------
 
@@ -109,6 +114,23 @@ CREATE TABLE `documentos` (
   `ruta` varchar(500) NOT NULL,
   `tipo` varchar(50) NOT NULL,
   `fecha_subida` datetime NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `permisos`
+--
+
+CREATE TABLE `permisos` (
+  `id` int(11) NOT NULL,
+  `alumno_id` int(11) NOT NULL,
+  `fecha_inicio` date NOT NULL,
+  `fecha_fin` date NOT NULL,
+  `motivo` text NOT NULL,
+  `archivo_ruta` varchar(500) DEFAULT NULL,
+  `estado` enum('pendiente','aprobado','rechazado') DEFAULT 'aprobado',
+  `fecha_creacion` datetime DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -178,6 +200,13 @@ ALTER TABLE `documentos`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `permisos`
+--
+ALTER TABLE `permisos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `alumno_id` (`alumno_id`);
+
+--
 -- Indices de la tabla `puestos`
 --
 ALTER TABLE `puestos`
@@ -197,13 +226,13 @@ ALTER TABLE `usuarios`
 -- AUTO_INCREMENT de la tabla `alumnos`
 --
 ALTER TABLE `alumnos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT de la tabla `asistencia`
 --
 ALTER TABLE `asistencia`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `documentos`
@@ -212,16 +241,32 @@ ALTER TABLE `documentos`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
+-- AUTO_INCREMENT de la tabla `permisos`
+--
+ALTER TABLE `permisos`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
 -- AUTO_INCREMENT de la tabla `puestos`
 --
 ALTER TABLE `puestos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `permisos`
+--
+ALTER TABLE `permisos`
+  ADD CONSTRAINT `fk_permiso_alumno` FOREIGN KEY (`alumno_id`) REFERENCES `alumnos` (`id`) ON DELETE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

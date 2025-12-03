@@ -19,7 +19,7 @@ Puedes ver directamente la imagen generada: `BiblioCheck - Diagrama de Clases.pn
 3. Presiona `Alt+D` para previsualizar el diagrama
 
 ### Opción 2: PlantUML Online
-1. Visita [PlantUML Online Server](http://www.plantuml.com/plantuml/uml/)
+1. Visita [PlantUML Online Server](https://www.plantuml.com/plantuml/uml/)
 2. Copia el contenido del archivo `class-diagram.plantuml`
 3. Pégalo en el editor online para visualizarlo
 
@@ -87,9 +87,9 @@ El diagrama representa las siguientes entidades principales:
 
 El diagrama documenta fielmente la estructura actual de la base de datos. Se han identificado algunas inconsistencias en el esquema original que podrían requerir atención en futuras revisiones:
 
-- **Inconsistencia de tipos**: El campo `id_alumno` es `varchar(20)` en la tabla `alumnos` pero `varchar(6)` en `alumnos_puestos`
-- **Falta de claves foráneas explícitas**: La tabla `alumnos_puestos` no define explícitamente sus claves foráneas en el SQL
-- **Posible desnormalización**: El campo `puesto` en la tabla `alumnos` podría ser redundante dado que existe la relación muchos a muchos con `puestos`
+- **Inconsistencia de tipos**: El campo `id_alumno` es `varchar(20)` en la tabla `alumnos` pero `varchar(6)` en `alumnos_puestos`. Recomendación: estandarizar ambos a `varchar(20)` o considerar usar un ID numérico entero.
+- **Falta de claves foráneas explícitas**: La tabla `alumnos_puestos` no define explícitamente sus claves foráneas ni clave primaria compuesta en el SQL. Recomendación: agregar `PRIMARY KEY (id_alumno, id_puesto)` y constraints de FOREIGN KEY.
+- **Posible desnormalización**: El campo `puesto` en la tabla `alumnos` podría ser redundante dado que existe la relación muchos a muchos con `puestos`. Recomendación: evaluar si este campo es necesario o puede eliminarse.
 
 ## Actualización del Diagrama
 

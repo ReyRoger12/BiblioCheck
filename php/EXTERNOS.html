@@ -1,0 +1,171 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="col-md-3">
+    <label class="small fw-bold">Turno Asignado</label>
+    <select name="turno_manual" class="form-select">
+        <option value="Matutino">Matutino</option>
+        <option value="Vespertino">Vespertino</option>
+        <option value="Mixto">Mixto</option>
+    </select>
+    <small class="text-muted">Define la disponibilidad del alumno.</small>
+</div>
+
+<div class="col-md-3">
+    <label class="small fw-bold">Meta Diaria (Horas)</label>
+    <input type="number" name="horas_objetivo_manual" class="form-control" value="4" min="1" max="12">
+    <small class="text-muted">Horas obligatorias por día.</small>
+</div>
+
+
+
+
+
+
+
+// alumnos.php - Lógica de inserción
+if ($accion === 'crear') {
+    $modo = $_POST['modo_registro'] ?? 'automatico';
+
+    if ($modo === 'manual') {
+        $nombre = trim($_POST['nombre_manual']);
+        $numero_control = trim($_POST['ncontrol_manual']);
+        $correo = trim($_POST['correo_manual']);
+        $id_alumno = trim($_POST['id_alumno_manual']);
+        $turno = $_POST['turno_manual']; // CONSIDERACIÓN PUNTO 3
+        $horas_objetivo = (int)$_POST['horas_objetivo_manual']; // CONSIDERACIÓN PUNTO 3
+        $horario_json = "{}"; // Sin bloques específicos de clase
+    } else {
+        // Lógica automática existente
+        $nombre = trim($_POST['nombre'] ?? '');
+        $numero_control = trim($_POST['numero_control'] ?? '');
+        $correo = trim($_POST['correo_institucional'] ?? '');
+        $id_alumno = $nuevoID; // ID generado automáticamente
+        $turno = $_POST['turno'] ?? 'Matutino';
+        $horas_objetivo = (int)($_POST['horas_objetivo'] ?? 4);
+        $horario_json = trim($_POST['horario_json_temp'] ?? '');
+    }
+
+    // El INSERT ahora incluye $turno y $horas_objetivo de forma dinámica
+    $stmt = $conexion->prepare("
+        INSERT INTO alumnos (id_alumno, qr_token, nombre, numero_control, status, contrasena, telefono, correo_electronico, puesto, semestre, carrera, turno, horas_objetivo, horario_json)
+        VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)
+    ");
+    // ... bind_param y execute ...
+}
+
+
+
+// Dentro del bloque if ($accion === 'crear') en alumnos.php
+
+$modo = $_POST['modo_registro'] ?? 'automatico';
+
+if ($modo === 'manual') {
+    // Captura directa de los campos del formulario
+    $nombre = trim($_POST['nombre_manual']);
+    $numero_control = trim($_POST['ncontrol_manual']);
+    $correo = trim($_POST['correo_manual']);
+    $id_alumno = trim($_POST['id_alumno_manual']); // El DOC001...
+    $horario_json = "{}"; // Horario vacío o genérico para registro manual
+} else {
+    // Lógica actual para PDF
+    $nombre = $_POST['nombre'] ?? '';
+    $numero_control = $_POST['numero_control'] ?? '';
+    $correo = $_POST['correo'] ?? '';
+    $id_alumno = $_POST['id_alumno'] ?? '';
+    $horario_json = $_POST['horario_json'] ?? '';
+}
+
+// El resto del INSERT permanece igual utilizando estas variables...
+
+
+
+
+<div class="card p-4 shadow-sm mb-4">
+    <h5>Registrar Nuevo Alumno</h5>
+    <form method="POST" enctype="multipart/form-data" id="formRegistroAlumno">
+        <input type="hidden" name="accion" value="crear">
+        
+        <div class="row g-3">
+            <div class="col-md-12">
+                <label class="fw-bold">Método de Registro:</label>
+                <select name="modo_registro" id="modo_registro" class="form-select bg-light" onchange="toggleModo()">
+                    <option value="automatico">Automático (Subir PDF de Horario)</option>
+                    <option value="manual">Manual (Ingreso de datos escrito)</option>
+                </select>
+            </div>
+
+            <div id="seccion_automatica" class="col-md-12">
+                <label>Seleccionar Horario (PDF):</label>
+                <input type="file" name="horario_pdf" id="horario_pdf" class="form-control" accept="application/pdf">
+                <small class="text-muted">El sistema extraerá nombre, control y horario automáticamente.</small>
+            </div>
+
+            <div id="seccion_manual" class="row g-3" style="display:none;">
+                <div class="col-md-6">
+                    <label>Nombre Completo:</label>
+                    <input type="text" name="nombre_manual" class="form-control" placeholder="Ej. Juan Pérez">
+                </div>
+                <div class="col-md-6">
+                    <label>Número de Control:</label>
+                    <input type="text" name="ncontrol_manual" class="form-control" placeholder="2127XXXX">
+                </div>
+                <div class="col-md-6">
+                    <label>Correo Institucional:</label>
+                    <input type="email" name="correo_manual" class="form-control">
+                </div>
+                <div class="col-md-6">
+                    <label>ID Interno (Generado):</label>
+                    <input type="text" name="id_alumno_manual" class="form-control" value="<?= $nuevoIdGenerado ?>" readonly>
+                </div>
+            </div>
+
+            <div class="col-md-12 mt-3">
+                <button type="submit" class="btn btn-success w-100">Finalizar Registro</button>
+            </div>
+        </div>
+
+        <input type="hidden" name="nombre" id="input_nombre">
+        <input type="hidden" name="numero_control" id="input_control">
+        <input type="hidden" name="correo" id="input_correo">
+        <input type="hidden" name="horario_json" id="input_horario">
+        <input type="hidden" name="id_alumno" id="input_id_alumno" value="<?= $nuevoIdGenerado ?>">
+    </form>
+</div>
+
+
+
+
+
+
+
+
+
+function toggleModo() {
+    const modo = document.getElementById('modo_registro').value;
+    const secAuto = document.getElementById('seccion_automatica');
+    const secManual = document.getElementById('seccion_manual');
+    const inputPdf = document.getElementById('horario_pdf');
+
+    if (modo === 'manual') {
+        secAuto.style.display = 'none';
+        secManual.style.display = 'flex';
+        inputPdf.removeAttribute('required');
+    } else {
+        secAuto.style.display = 'block';
+        secManual.style.display = 'none';
+        inputPdf.setAttribute('required', 'required');
+    }
+}

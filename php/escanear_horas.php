@@ -43,7 +43,7 @@ declare(strict_types=1);
         </div>
         
         <div class="text-center mt-4">
-            <a href="/BiblioCheck/dashboard" class="btn btn-outline-secondary">
+            <a href="/BiblioCheck/php/dashboard.php" class="btn btn-outline-secondary">
                 <i class="fa-solid fa-arrow-left"></i> Regresar al Inicio
             </a>
         </div>

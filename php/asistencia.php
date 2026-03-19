@@ -78,11 +78,11 @@ try {
       </div>
     </div>
     <ul>
-<li><a href="/BiblioCheck/dashboard"><i class="fa-solid fa-table-columns"></i> Inicio</a></li>
-<li><a href="/BiblioCheck/alumnos"><i class="fa-solid fa-users"></i> Personal</a></li>
-<li><a href="/BiblioCheck/permisos"><i class="fa-solid fa-notes-medical"></i> Permisos</a></li>
-<li><a href="/BiblioCheck/asistencia" class='active'><i class="fa-solid fa-calendar-check"></i> Asistencias</a></li>
-      <li><a href="/BiblioCheck/php/Logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+<li><a href="/BiblioCheck/php/dashboard.php"><i class="fa-solid fa-table-columns"></i> Inicio</a></li>
+<li><a href="/BiblioCheck/php/alumnos.php"><i class="fa-solid fa-users"></i> Personal</a></li>
+<li><a href="/BiblioCheck/php/permisos.php"><i class="fa-solid fa-notes-medical"></i> Permisos</a></li>
+<li><a href="/BiblioCheck/php/asistencia.php" class='active'><i class="fa-solid fa-calendar-check"></i> Asistencias</a></li>
+      <li><a href="/BiblioCheck/php/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
     </ul>
   </aside>
 

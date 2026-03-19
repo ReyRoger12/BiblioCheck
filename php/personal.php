@@ -64,7 +64,7 @@ try {
       <li><a href="asistencia.php">Asistencias</a></li>
       <li class="activo"><a href="personal.php">Personal</a></li>
       <li><a href="reportes.php">Reportes</a></li>
-      <li><a href="/BiblioCheck/php/Logout.php">Cerrar sesión</a></li>
+      <li><a href="/BiblioCheck/php/logout.php">Cerrar sesión</a></li>
     </ul>
   </aside>
 

@@ -84,7 +84,7 @@ $permisos = $conexion->query($sql_list)->fetch_all(MYSQLI_ASSOC);
       <li><a href="../php/alumnos.php"><i class="fa-solid fa-users"></i> Personal</a></li>
       <li><a href="../php/permisos.php"><i class="fa-solid fa-notes-medical"></i> Permisos</a></li>
       <li><a href="../php/asistencia.php"><i class="fa-solid fa-calendar-check"></i> Asistencias</a></li>
-      <li><a href="../php/Logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+      <li><a href="../php/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
     </ul>
   </aside>
 

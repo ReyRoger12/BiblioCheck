@@ -63,7 +63,7 @@ try {
       <li><a href="../php/permisos.php"><i class="fa-solid fa-notes-medical"></i> Permisos</a></li>
       <li><a href="../php/asistencia.php">Asistencias</a></li>
       <li class="activo"><a href="../php/reportes.php">Reportes</a></li>
-      <li><a href="../php/Logout.php">Cerrar sesión</a></li>
+      <li><a href="../php/logout.php">Cerrar sesión</a></li>
     </ul>
   </aside>
 

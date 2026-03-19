@@ -4,7 +4,7 @@ declare(strict_types=1);
 session_start();
 
 if (empty($_SESSION['user'])) {
-    header('Location: /xampp/alumnoTrack/html/login-admin.html?e=' . rawurlencode('Inicia sesion primero'));
+    header('Location: /BiblioCheck/html/login-admin.html?e=' . rawurlencode('Inicia sesion primero'));
     exit;
 }
 
@@ -37,11 +37,11 @@ $user = $_SESSION['user'];
     </div>
 
     <ul>
-<li><a href="/BiblioCheck/dashboard" class='active'><i class="fa-solid fa-table-columns"></i> Inicio</a></li>
-<li><a href="/BiblioCheck/alumnos"><i class="fa-solid fa-users"></i> Personal</a></li>
-<li><a href="/BiblioCheck/permisos"><i class="fa-solid fa-notes-medical"></i> Permisos</a></li>
-<li><a href="/BiblioCheck/asistencia"><i class="fa-solid fa-calendar-check"></i> Asistencias</a></li>
-      <li><a href="/BiblioCheck/php/Logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+<li><a href="/BiblioCheck/php/dashboard.php" class='active'><i class="fa-solid fa-table-columns"></i> Inicio</a></li>
+<li><a href="/BiblioCheck/php/alumnos.php"><i class="fa-solid fa-users"></i> Personal</a></li>
+<li><a href="/BiblioCheck/php/permisos.php"><i class="fa-solid fa-notes-medical"></i> Permisos</a></li>
+<li><a href="/BiblioCheck/php/asistencia.php"><i class="fa-solid fa-calendar-check"></i> Asistencias</a></li>
+      <li><a href="/BiblioCheck/php/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
   </aside>
 
   <main class="contenido">

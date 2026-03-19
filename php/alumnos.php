@@ -3,7 +3,7 @@
 declare(strict_types=1);
 session_start();
 if (empty($_SESSION['user'])) {
-    header('Location: /xampp/BiblioCheck/html/login-admin.html?e=' . rawurlencode('Inicia sesion primero'));
+    header('Location: /BiblioCheck/html/login-admin.html?e=' . rawurlencode('Inicia sesion primero'));
     exit;
 }
 require_once __DIR__ . '/../php/conexion.php';
@@ -202,7 +202,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
             }
 
-            header("Location: /BiblioCheck/alumnos?msg=creado");
+            header("Location: /BiblioCheck/php/alumnos.php?msg=creado");
             exit;
 
         } 
@@ -228,7 +228,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt->execute();
             $stmt->close();
 
-            header("Location: /BiblioCheck/alumnos?msg=eliminado");
+            header("Location: /BiblioCheck/php/alumnos.php?msg=eliminado");
             exit;
         }
     } catch (Throwable $e) {
@@ -316,11 +316,11 @@ try {
   <aside class="sidebar">
     <h2><i class="fa-solid fa-chalkboard-user"></i>BiblioCheck</h2>
     <ul>
-<li><a href="/BiblioCheck/dashboard"><i class="fa-solid fa-table-columns"></i> Inicio</a></li>
-<li><a href="/BiblioCheck/alumnos" class='active'><i class="fa-solid fa-users"></i> Personal</a></li>
-<li><a href="/BiblioCheck/permisos"><i class="fa-solid fa-notes-medical"></i> Permisos</a></li>
-<li><a href="/BiblioCheck/asistencia"><i class="fa-solid fa-calendar-check"></i> Asistencias</a></li>
-      <li><a href="/BiblioCheck/php/Logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+<li><a href="/BiblioCheck/php/dashboard.php"><i class="fa-solid fa-table-columns"></i> Inicio</a></li>
+<li><a href="/BiblioCheck/php/alumnos.php" class='active'><i class="fa-solid fa-users"></i> Personal</a></li>
+<li><a href="/BiblioCheck/php/permisos.php"><i class="fa-solid fa-notes-medical"></i> Permisos</a></li>
+<li><a href="/BiblioCheck/php/asistencia.php"><i class="fa-solid fa-calendar-check"></i> Asistencias</a></li>
+      <li><a href="/BiblioCheck/php/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
   </aside>
 
   <main class="contenido">
@@ -336,14 +336,14 @@ try {
 <?php if (isset($_GET['msg']) && $_GET['msg']=='creado'): ?>
           <div class="alert alert-success">Alumno registrado correctamente.</div>
           <script>
-              setTimeout(() => { window.location.href = '/BiblioCheck/alumnos'; }, 5000);
+              setTimeout(() => { window.location.href = '/BiblioCheck/php/alumnos.php'; }, 5000);
           </script>
       <?php endif; ?>
       
       <?php if (isset($_GET['msg']) && $_GET['msg']=='eliminado'): ?>
           <div class="alert alert-success">Registro eliminado correctamente.</div>
           <script>
-              setTimeout(() => { window.location.href = '/BiblioCheck/alumnos'; }, 5000);
+              setTimeout(() => { window.location.href = '/BiblioCheck/php/alumnos.php'; }, 5000);
           </script>
       <?php endif; ?>
    <?php if ($error): ?>

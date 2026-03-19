@@ -192,7 +192,7 @@ try {
       <li><a href="/BiblioCheck/php/permisos.php"><i class="fa-solid fa-notes-medical"></i> Permisos</a></li>
       <li><a href="/BiblioCheck/php/asistencia.php"><i class="fa-solid fa-calendar-check"></i> Asistencias</a></li>
       <li><a href="/BiblioCheck/php/reportes.php"><i class="fa-solid fa-file-lines"></i> Reportes</a></li>
-      <li><a href="/BiblioCheck/php/Logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+      <li><a href="/BiblioCheck/php/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
     </ul>
   </aside>
 

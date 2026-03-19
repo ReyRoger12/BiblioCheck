@@ -101,11 +101,11 @@ $permisos = $conexion->query($sql_list)->fetch_all(MYSQLI_ASSOC);
   <aside class="sidebar">
     <h2><i class="fa-solid fa-chalkboard-user"></i> BiblioCheck</h2>
     <ul>
-<li><a href="/BiblioCheck/dashboard"><i class="fa-solid fa-table-columns"></i> Inicio</a></li>
-<li><a href="/BiblioCheck/alumnos"><i class="fa-solid fa-users"></i> Personal</a></li>
-<li><a href="/BiblioCheck/permisos" class='active'><i class="fa-solid fa-notes-medical"></i> Permisos</a></li>
-<li><a href="/BiblioCheck/asistencia"><i class="fa-solid fa-calendar-check"></i> Asistencias</a></li>
-      <li><a href="/BiblioCheck/php/Logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
+<li><a href="/BiblioCheck/php/dashboard.php"><i class="fa-solid fa-table-columns"></i> Inicio</a></li>
+<li><a href="/BiblioCheck/php/alumnos.php"><i class="fa-solid fa-users"></i> Personal</a></li>
+<li><a href="/BiblioCheck/php/permisos.php" class='active'><i class="fa-solid fa-notes-medical"></i> Permisos</a></li>
+<li><a href="/BiblioCheck/php/asistencia.php"><i class="fa-solid fa-calendar-check"></i> Asistencias</a></li>
+      <li><a href="/BiblioCheck/php/logout.php"><i class="fa-solid fa-right-from-bracket"></i> Cerrar sesión</a></li>
     </ul>
   </aside>
 
@@ -118,14 +118,14 @@ $permisos = $conexion->query($sql_list)->fetch_all(MYSQLI_ASSOC);
        <?php if ($mensaje): ?>
           <div class="alert alert-success"><?= $mensaje ?></div>
           <script>
-              setTimeout(() => { window.location.href = '/BiblioCheck/permisos'; }, 5000);
+              setTimeout(() => { window.location.href = '/BiblioCheck/php/permisos.php'; }, 5000);
           </script>
       <?php endif; ?>
       
       <?php if ($error): ?>
           <div class="alert alert-danger"><?= $error ?></div>
           <script>
-              setTimeout(() => { window.location.href = '/BiblioCheck/permisos'; }, 5000);
+              setTimeout(() => { window.location.href = '/BiblioCheck/php/permisos.php'; }, 5000);
           </script>
       <?php endif; ?>
 
